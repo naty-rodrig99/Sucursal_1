@@ -6,16 +6,37 @@ go
 
 CREATE TABLE [dbo].[Sucursal](
 	[idSucursal] [int] IDENTITY(1,1) NOT NULL,
-	[ubicacion] [geometry] NULL,
-	[pais] [varchar](30) NULL,
 	[horaEntrada] [time](4) NULL,
 	[horaSalida] [time](4) NULL,
  CONSTRAINT [PK_Sucursal] PRIMARY KEY CLUSTERED 
 (
 	[idSucursal] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
+
+
+
+CREATE TABLE [dbo].[SucursalUbicacion](
+	[idSucursalUbicacion] [int] IDENTITY(1,1) NOT NULL,
+	[ubicacion] [int] NULL,
+	[pais] [varchar](30) NULL,
+	[idSucursal] [int] NULL,
+ CONSTRAINT [PK_SucursalUbicacion] PRIMARY KEY CLUSTERED 
+(
+	[idSucursalUbicacion] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[SucursalUbicacion]  WITH CHECK ADD  CONSTRAINT [FK_SucursalUbicacion_Sucursal] FOREIGN KEY([idSucursal])
+REFERENCES [dbo].[Sucursal] ([idSucursal])
+GO
+
+ALTER TABLE [dbo].[SucursalUbicacion] CHECK CONSTRAINT [FK_SucursalUbicacion_Sucursal]
+GO
+
+
 
 
 CREATE TABLE [dbo].[Empleado](
